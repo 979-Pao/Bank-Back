@@ -1,10 +1,11 @@
 package com.System.BankBack.repository;
 
-import com.System.BankBack.model.users.*;
-import org.springframework.data.jpa.repository.*;
+import com.System.BankBack.model.users.ThirdParty;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ThirdPartyRepository extends JpaRepository<ThirdParty, Long> {
-    ThirdParty findByHashedKey(String hashedKey);
+    ThirdParty findByHashKey(String hashKey);
 }
+

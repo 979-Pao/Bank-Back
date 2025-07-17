@@ -9,5 +9,5 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findByThirdPartyId(Long thirdPartyId);
 
-    List<Transaction> findAllByThirdPartyHashedKey(String hashedKey);
+    List<Transaction> findAllByThirdPartyHashKey(String hashKey);
 }

@@ -9,6 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * End-points para operaciones de terceros autorizados (ThirdParty).
+ * – POST   /thirdparty/send               → Enviar dinero desde una cuenta usando hashKey
+ * – POST   /thirdparty/receive            → Recibir dinero en una cuenta usando hashKey
+ * – GET    /thirdparty/transactions       → Consultar todas las transacciones asociadas al hashKey
+ * – DELETE /thirdparty/{id}               → Eliminar un usuario ThirdParty (solo admin autorizado)
+ * Todas las rutas (excepto DELETE) requieren el header: "hashed-key": [clave-hash-autorizada]
+ */
 
 @RestController
 @RequestMapping("/thirdparty")

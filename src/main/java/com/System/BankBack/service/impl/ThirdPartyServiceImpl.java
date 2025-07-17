@@ -27,9 +27,9 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     /* ---------- POST send money ---------- */
     @Override
     @Transactional
-    public void sendMoney(String hashedKey, ThirdPartyMovementDTO dto) {
+    public void sendMoney(String hashKey, ThirdPartyMovementDTO dto) {
 
-        ThirdParty tp = tpRepo.findByHashedKey(hashedKey);
+        ThirdParty tp = tpRepo.findByHashKey(hashKey);
         if (tp == null) throw new RuntimeException("Invalid third-party key");
 
         Account dest = accRepo.findById(dto.getAccountId())
@@ -47,9 +47,9 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
     /* ---------- POST receive money ---------- */
     @Override
     @Transactional
-    public void receiveMoney(String hashedKey, ThirdPartyMovementDTO dto) {
+    public void receiveMoney(String hashKey, ThirdPartyMovementDTO dto) {
 
-        ThirdParty tp = tpRepo.findByHashedKey(hashedKey);
+        ThirdParty tp = tpRepo.findByHashKey(hashKey);
         if (tp == null) throw new RuntimeException("Invalid third-party key");
 
         Account origin = accRepo.findById(dto.getAccountId())
@@ -69,8 +69,8 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
 
     /* ---------- GET own transactions ---------- */
     @Override
-    public List<Transaction> listTransactions(String hashedKey) {
-        return txRepo.findAllByThirdPartyHashedKey(hashedKey);
+    public List<Transaction> listTransactions(String hashKey) {
+        return txRepo.findAllByThirdPartyHashKey(hashKey);
     }
 
     /* ---------- DELETE third-party ---------- */
@@ -81,3 +81,4 @@ public class ThirdPartyServiceImpl implements ThirdPartyService {
         tpRepo.deleteById(id);
     }
 }
+

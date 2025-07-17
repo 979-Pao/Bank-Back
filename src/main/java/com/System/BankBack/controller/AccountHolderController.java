@@ -8,12 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * End-points exclusivos para los Account Holders.
- * – GET    /holder/{id}/balance
- * – POST   /holder/transfer
- * – PATCH  /holder/{id}/status?status=ACTIVE|FROZEN
- * – DELETE /holder/{id}
+ * End-points exclusivos para los Account Holders (titulares de cuenta).
+ * – GET    /holder/{id}/balance           → Consultar saldo de la cuenta con ID
+ * – POST   /holder/transfer               → Realizar una transferencia entre cuentas
+ * – PATCH  /holder/{id}/status?status=X   → Cambiar estado de cuenta (ACTIVE o FROZEN)
+ * – DELETE /holder/{id}                   → Eliminar la cuenta con ID indicado
  */
+
 @RestController
 @RequestMapping("/holder")
 @RequiredArgsConstructor

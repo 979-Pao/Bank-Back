@@ -52,7 +52,7 @@ public class DataSeeder implements CommandLineRunner {
         gateway.setUsername("gateway");           // opcional para login
         gateway.setPassword(encoder.encode("third123"));
         gateway.setName("Gateway Service");
-        gateway.setHashedKey("9f5a0d8e-abcdef");  // pon tu hash real
+        gateway.setHashKey("9f5a0d8e-abcdef");   // pon tu hash real
         tpRepo.save(gateway);
 
         System.out.println("🌱 Seed insertado: admin, paola, gateway");

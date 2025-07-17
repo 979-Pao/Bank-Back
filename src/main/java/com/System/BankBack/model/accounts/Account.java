@@ -3,6 +3,8 @@ package com.System.BankBack.model.accounts;
 import com.System.BankBack.model.embedded.Money;
 import com.System.BankBack.model.enums.Status;
 import com.System.BankBack.model.users.AccountHolder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,6 +15,17 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Checking.class, name = "Checking"),
+        @JsonSubTypes.Type(value = StudentChecking.class, name = "StudentChecking"),
+        @JsonSubTypes.Type(value = Savings.class, name = "Savings"),
+        @JsonSubTypes.Type(value = CreditCard.class, name = "CreditCard")
+})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Account {

@@ -5,6 +5,7 @@ import com.System.BankBack.model.accounts.*;
 import com.System.BankBack.model.embedded.Address;
 import com.System.BankBack.model.embedded.Money;
 import com.System.BankBack.model.users.AccountHolder;
+import com.System.BankBack.model.users.ThirdParty;
 import com.System.BankBack.repository.*;
 import com.System.BankBack.service.AdminService;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public class AdminServiceImpl implements AdminService {
     private final AccountHolderRepository   holderRepo;
     private final UserRepository            userRepo;
     private final AccountRepository         accountRepo;
+    private final ThirdPartyRepository      thirdPartyRepo;
     private final CheckingRepository        checkingRepo;
     private final StudentCheckingRepository studentRepo;
     private final SavingsRepository         savingsRepo;
@@ -130,9 +132,30 @@ public class AdminServiceImpl implements AdminService {
         return holderRepo.save(holder);
     }
 
+    /* ───── CREATE THIRDPARTY ───── */
+    @Override
+    public ThirdParty createThirdParty(CreateThirdPartyDTO dto) {
+        if (userRepo.existsByUsername(dto.getUsername()))
+            throw new RuntimeException("Username already taken");
+
+        ThirdParty tp = new ThirdParty();
+        tp.setUsername(dto.getUsername());
+        tp.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        // Si no viene el hashKey o está vacío, generamos uno automáticamente
+        String safeHashKey = (dto.getHashKey() == null || dto.getHashKey().isBlank())
+                ? "TP-" + UUID.randomUUID()
+                : dto.getHashKey();
+
+        tp.setHashKey(safeHashKey);
+
+        return thirdPartyRepo.save(tp);
+    }
+
     /* ───── LISTAR ───── */
     @Override public List<AccountHolder> findAllHolders()  { return holderRepo.findAll(); }
     @Override public List<Account>       findAllAccounts() { return accountRepo.findAll(); }
+    @Override public List<ThirdParty> findAllThirdParties() {return thirdPartyRepo.findAll();}
 
     /* ───── UPDATE BALANCE ───── */
     @Override
