@@ -9,6 +9,7 @@ import com.System.BankBack.model.users.ThirdParty;
 import com.System.BankBack.model.users.User;
 import com.System.BankBack.repository.*;
 import com.System.BankBack.service.AdminService;
+import com.System.BankBack.service.FraudDetectionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ public class AdminServiceImpl implements AdminService {
     private final StudentCheckingRepository studentRepo;
     private final SavingsRepository         savingsRepo;
     private final CreditCardRepository      creditRepo;
+    private final FraudDetectionService fraudSvc;
 
     /* ---------- Utils ---------- */
     private final PasswordEncoder passwordEncoder;

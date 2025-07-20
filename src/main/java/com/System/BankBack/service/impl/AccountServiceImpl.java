@@ -8,6 +8,7 @@ import com.System.BankBack.model.transactions.Transaction;
 import com.System.BankBack.model.users.AccountHolder;
 import com.System.BankBack.repository.*;
 import com.System.BankBack.service.AccountService;
+import com.System.BankBack.service.FraudDetectionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository       accountRepo;
     private final TransactionRepository   txRepo;
     private final AccountHolderRepository holderRepo;
+    private final FraudDetectionService fraudSvc;
+
 
     /* ═════ HELPERS ═════ */
 
@@ -84,6 +87,14 @@ public class AccountServiceImpl implements AccountService {
 
     /* ═════ TRANSFERENCIAS ═════ */
 
+    private void ensureActive(Account acc) {
+        if (acc.getStatus() == Status.FROZEN) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Account " + acc.getId() + " is frozen – operation rejected");
+        }
+    }
+
     @Override
     @Transactional
     public void transfer(TransferDTO dto) {
@@ -92,9 +103,13 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "From-account not found"));
 
-        Account to = accountRepo.findById(dto.getToAccountId())
+        Account to   = accountRepo.findById(dto.getToAccountId())
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "To-account not found"));
+
+        /* ⛔️  BLOQUEAR si alguna de las dos está FROZEN */
+        ensureActive(from);
+        ensureActive(to);
 
         BigDecimal amt = dto.getAmount();
 
@@ -102,13 +117,23 @@ public class AccountServiceImpl implements AccountService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Insufficient funds");
 
-        /* movimiento */
+        /* ① mover dinero */
         from.getBalance().setAmount(from.getBalance().getAmount().subtract(amt));
-        to.getBalance().setAmount(to.getBalance().getAmount().add(amt));
+        to  .getBalance().setAmount(to  .getBalance().getAmount().add(amt));
 
-        /* registro contable */
-        txRepo.save(new Transaction(from, new Money(amt.negate()), null));
-        txRepo.save(new Transaction(to,   new Money(amt),          null));
+        /* ② registrar */
+        Transaction out = new Transaction(from, new Money(amt.negate()), null);
+        Transaction in  = new Transaction(to,   new Money(amt),          null);
+        txRepo.save(out);
+        txRepo.save(in);
+
+        /* ③ guardar los nuevos saldos */
+        accountRepo.save(from);
+        accountRepo.save(to);
+
+        /* ④ detectar fraude */
+        fraudSvc.evaluate(out);
+        fraudSvc.evaluate(in);
     }
 
     /* ═════ CAMBIO DE ESTADO ═════ */
