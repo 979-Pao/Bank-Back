@@ -4,6 +4,7 @@ import com.System.BankBack.dto.*;
 import com.System.BankBack.model.accounts.Account;
 import com.System.BankBack.model.users.AccountHolder;
 import com.System.BankBack.model.users.ThirdParty;
+import com.System.BankBack.model.users.User;
 import com.System.BankBack.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -30,7 +31,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     private final AdminService adminService;
 
@@ -86,6 +87,12 @@ public class AdminController {
     @GetMapping("/third-parties")
     public List<ThirdParty> allThirdParties() {
         return adminService.findAllThirdParties();
+    }
+
+    /** Listar todos los usuarios (cualquier tipo) */
+    @GetMapping("/users")
+    public List<User> allUsers() {
+        return adminService.findAllUsers();
     }
 
     /* ---------- PUT / PATCH ---------- */

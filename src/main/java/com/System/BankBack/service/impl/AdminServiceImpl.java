@@ -6,6 +6,7 @@ import com.System.BankBack.model.embedded.Address;
 import com.System.BankBack.model.embedded.Money;
 import com.System.BankBack.model.users.AccountHolder;
 import com.System.BankBack.model.users.ThirdParty;
+import com.System.BankBack.model.users.User;
 import com.System.BankBack.repository.*;
 import com.System.BankBack.service.AdminService;
 import jakarta.transaction.Transactional;
@@ -141,6 +142,7 @@ public class AdminServiceImpl implements AdminService {
         ThirdParty tp = new ThirdParty();
         tp.setUsername(dto.getUsername());
         tp.setPassword(passwordEncoder.encode(dto.getPassword()));
+        tp.setName(dto.getName()); //
 
         // Si no viene el hashKey o está vacío, generamos uno automáticamente
         String safeHashKey = (dto.getHashKey() == null || dto.getHashKey().isBlank())
@@ -152,10 +154,12 @@ public class AdminServiceImpl implements AdminService {
         return thirdPartyRepo.save(tp);
     }
 
+
     /* ───── LISTAR ───── */
     @Override public List<AccountHolder> findAllHolders()  { return holderRepo.findAll(); }
     @Override public List<Account>       findAllAccounts() { return accountRepo.findAll(); }
     @Override public List<ThirdParty> findAllThirdParties() {return thirdPartyRepo.findAll();}
+    @Override public List<User> findAllUsers() { return userRepo.findAll();}
 
     /* ───── UPDATE BALANCE ───── */
     @Override

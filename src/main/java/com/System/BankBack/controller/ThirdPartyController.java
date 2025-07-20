@@ -1,11 +1,15 @@
 package com.System.BankBack.controller;
 
 import com.System.BankBack.dto.*;
+import com.System.BankBack.model.transactions.Transaction;
 import com.System.BankBack.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,30 +26,36 @@ import java.util.List;
 @RequestMapping("/thirdparty")
 @RequiredArgsConstructor
 public class ThirdPartyController {
+
     private final ThirdPartyService thirdSvc;
 
-    /* POST enviar dinero */
     @PostMapping("/send")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void send(HttpServletRequest request, @RequestBody ThirdPartyMovementDTO dto){
-        thirdSvc.sendMoney(request.getHeader("hashed-key"), dto);
+    public void send(@RequestHeader("X-Hashed-Key") String hash,
+                     @RequestBody ThirdPartyMovementDTO dto) {
+        thirdSvc.sendMoney(hash, dto);
     }
 
-    /* POST recibir dinero */
+    // ----- POST  /thirdparty/receive ---------------------------------
     @PostMapping("/receive")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void receive(HttpServletRequest request, @RequestBody ThirdPartyMovementDTO dto){
-        thirdSvc.receiveMoney(request.getHeader("hashed-key"), dto);
+    public void receive(@RequestHeader("X-Hashed-Key") String hash,
+                        @RequestBody ThirdPartyMovementDTO dto) {
+        thirdSvc.receiveMoney(hash, dto);
     }
 
-    /* GET auditoría */
+    // ----- GET   /thirdparty/transactions ----------------------------
     @GetMapping("/transactions")
-    public List<?> listTx(HttpServletRequest request){
-        return thirdSvc.listTransactions(request.getHeader("hashed-key"));
+    public List<Transaction> listTransactions(
+            @RequestHeader("X-Hashed-Key") String hashedKey) {
+        return thirdSvc.listTransactions(hashedKey);
     }
 
-    /* DELETE (admin) */
+    // ----- DELETE /thirdparty/{id}   (solo ADMIN) --------------------
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){ thirdSvc.deleteThirdParty(id);}
+    public void delete(@PathVariable Long id){
+        thirdSvc.deleteThirdParty(id);
+    }
 }

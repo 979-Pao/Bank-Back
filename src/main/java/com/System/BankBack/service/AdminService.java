@@ -4,6 +4,7 @@ import com.System.BankBack.dto.*;
 import com.System.BankBack.model.accounts.Account;
 import com.System.BankBack.model.users.AccountHolder;   // ← FALTA ESTE IMPORT
 import com.System.BankBack.model.users.ThirdParty;
+import com.System.BankBack.model.users.User;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public interface AdminService {
     /** Listar todas las cuentas del sistema */
     List<Account> findAllAccounts();
     List<AccountHolder> findAllHolders();
+    List<User> findAllUsers();
 
     /** Listar todas los terceros */
     List<ThirdParty> findAllThirdParties();
