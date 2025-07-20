@@ -15,8 +15,8 @@ import java.util.List;
 
 /**
  * End-points para operaciones de terceros autorizados (ThirdParty).
- * – POST   /thirdparty/send               → Enviar dinero desde una cuenta usando hashKey
- * – POST   /thirdparty/receive            → Recibir dinero en una cuenta usando hashKey
+ * – POST   /thirdparty/refund             → Recibir dinero en una cuenta usando hashKey
+ * – POST   /thirdparty/payment            → Enviar dinero desde una cuenta usando hashKey
  * – GET    /thirdparty/transactions       → Consultar todas las transacciones asociadas al hashKey
  * – DELETE /thirdparty/{id}               → Eliminar un usuario ThirdParty (solo admin autorizado)
  * Todas las rutas (excepto DELETE) requieren el header: "hashed-key": [clave-hash-autorizada]
@@ -29,7 +29,7 @@ public class ThirdPartyController {
 
     private final ThirdPartyService thirdSvc;
 
-    @PostMapping("/send")
+    @PostMapping("/refund")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void send(@RequestHeader("X-Hashed-Key") String hash,
                      @RequestBody ThirdPartyMovementDTO dto) {
@@ -37,7 +37,7 @@ public class ThirdPartyController {
     }
 
     // ----- POST  /thirdparty/receive ---------------------------------
-    @PostMapping("/receive")
+    @PostMapping("/payment")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void receive(@RequestHeader("X-Hashed-Key") String hash,
                         @RequestBody ThirdPartyMovementDTO dto) {
