@@ -6,7 +6,7 @@
 ---
 
 ## Diagrama de Clases
-![Class Diagram](docs/class-diagram.png) <!-- Sustituye con la ruta o URL correcta -->
+![Class Diagram](/assets/UML_Banking-system.png)
 
 ---
 
@@ -22,9 +22,7 @@ SPRING_DATASOURCE_USERNAME=[📝]
 SPRING_DATASOURCE_PASSWORD=[📝]
 JWT_SECRET=[📝 clave-muy-secreta]
 
-# 3. Levanta la BD (Docker opcional)
-docker compose up -d       # usa docker-compose.yml incluido
-# 4. Arranca el servidor
+# 3. Arranca el servidor
 ./mvnw spring-boot:run
 ```
 
@@ -36,7 +34,6 @@ docker compose up -d       # usa docker-compose.yml incluido
 - **MySQL 8** + Flyway
 - **JWT + Bearer Auth**
 - **Maven**, **Lombok**, **JUnit 5 / Spring Test**
-- **Docker & Docker Compose**
 - **Swagger/OpenAPI** para documentación de endpoints
 
 ---
@@ -81,6 +78,6 @@ docker compose up -d       # usa docker-compose.yml incluido
 ---
 
 ## Team members
-| Nombre | Rol | GitHub |
-|--------|-----|--------|
-| [📝 Tu Nombre] | Dev & PM | [📝 @tuusuario] |
+| Nombre             | Rol     | GitHub |
+|--------------------|---------|--------|
+| [📝 Paola Montaño] | Student | [📝 @tuusuario] |

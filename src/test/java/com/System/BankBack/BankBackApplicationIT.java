@@ -16,20 +16,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class BankBackApplicationIT {
 
-	@Autowired
-	ApplicationContext ctx;
+    @Autowired
+    ApplicationContext ctx;
 
-	@Autowired
-	AccountService accountService;   // bean esencial para la app
+    @Autowired
+    AccountService accountService;   // bean esencial para la app
 
-	@Test
-	void contextStarts_and_coreBeansPresent() {
-		// 1) el propio contexto
-		assertThat(ctx).isNotNull();
+    @Test
+    void contextStarts_and_coreBeansPresent() {
+        // 1) el propio contexto
+        assertThat(ctx).isNotNull();
 
-		// 2) el AccountService se encuentra y está inicializado
-		assertThat(accountService).isNotNull();
-		// Si quieres validar que es tu implementación concreta:
-		// assertThat(accountService).isInstanceOf(AccountServiceImpl.class);
-	}
+        // 2) el AccountService se encuentra y está inicializado
+        assertThat(accountService).isNotNull();
+        // Si quieres validar que es tu implementación concreta:
+        // assertThat(accountService).isInstanceOf(AccountServiceImpl.class);
+    }
 }
