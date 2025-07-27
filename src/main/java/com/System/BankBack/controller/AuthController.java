@@ -13,6 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * End-points para autenticación de usuarios (Auth).
+ * – POST  /auth/login   → Iniciar sesión y recibir un JWT válido.
+ */
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

@@ -6,14 +6,14 @@
 ---
 
 ## Diagrama de Clases
-![Class Diagram](/assets/UML_Banking-system.png)
+![Class Diagram](/assets/BankBack_UML.png)
 
 ---
 
 ## Setup
 ```bash
 # 1. Clona el repo
-git clone https://github.com/[📝 TU-USUARIO]/BankBack.git
+git clone https://github.com/979-Pao/Bank-Back.git
 cd BankBack
 
 # 2. Configura variables (application-dev.properties)
@@ -40,24 +40,32 @@ JWT_SECRET=[📝 clave-muy-secreta]
 
 ## Controladores y rutas
 
-| Método | Endpoint | Rol | Descripción |
-|--------|----------|-----|-------------|
-| GET | `/holder/accounts` | Holder | Lista todas mis cuentas |
-| GET | `/holder/account/{id}` | Holder | Detalle de cuenta |
-| POST | `/holder/transfer` | Holder | Transferencia a otra cuenta |
-| PATCH | `/holder/{id}/status` | Holder | Cambia estado de la cuenta |
-| DELETE | `/holder/{id}` | Holder | Cierra la cuenta |
-| POST | `/admin/checking` | Admin | Crea cuenta corriente |
-| POST | `/admin/savings` | Admin | Crea cuenta de ahorro |
-| POST | `/admin/credit-card` | Admin | Crea tarjeta de crédito |
-| GET | `/admin/accounts` | Admin | Lista todas las cuentas |
-| ... | ... | ... | *(ver Swagger para el resto)* |
-
+| Rol    | Endpoint                      | Método |Descripción                                          |
+|--------|-------------------------------|--------|------------------------------------------------------|
+| Auth   | `/auth/login`                 |    POST     |Iniciar sesión y recibir un JWT Válido               |
+| Admin  | `/admin/checking`             |    POST    |Crea cuenta corriente o student                      |
+| Admin  | `/admin/savings`              |   POST      |Crea cuenta de ahorro                                |
+| Admin  | `/admin/credit-card`          |   POST      |Crea tarjeta de crédito                              |
+| Admin  | `/admin/holders`              |   POST     |Crea un titular de cuenta (AccountHolder)            |
+| Admin  | `/admin/third-party`          |    POST     |Crea una pasarela de pago (Thirdparty)               |
+| Admin  | `/admin/accounts`             |    GET    |Lista todas las cuentas                              |
+| Admin  | `/admin/holders`              |    GET    |Lista todos los titulares (AccountHolder)            |
+| Admin  | `/admin/third-parties`        |   GET     |Lista todos los usuarios (Thirdparty)                |
+| Admin  | `/admin/accounts/{id}/balance` |    PUT     |Actualizar el saldo de una cuenta especifica         |
+| Admin  | `/admin/accounts/{id}`        |   DELETE     |Cierra la cuenta por su ID                           |
+| Holder  | `/holder/transfer`            |    POST     |Transferencia a otra cuenta                          |
+| Holder    | `/holder/accounts`            |   GET     |Lista todas mis cuentas                              |
+| Holder    | `/holder/account/{id}`        |   GET    |Detalle de cuenta                                    |
+| Holder  | `/holder/{id}/status`         |   PATCH     |Cambia estado de la cuenta                           |
+| Holder | `/holder/{id}`                |   DELETE     |Cierra la cuenta                                     |
+| ThirdParty   | `/thirdparty/refund`          |    POST     |Recibe dinero en una cuenta usando hashKey           |
+| ThirdParty   | `/thirdparty/payment`         |    POST    |Envia dinero desde una cuenta usando hashKey         |
+| ThirdParty    | `/thirdparty/transactions`    |     GET   |Consulta todas las transaciones asociadas al hashKey |
+|ThirdParty | `/thirdparty/{id}`          |     DELETE   |Elimina un usuario ThirdParty                        |
 ---
 
 ## Enlaces extra
 - **Kanban/Trello**: [📝 URL]
-- **Wireframes / Figma**: [📝 URL]
 - **Presentación de diapositivas**: [📝 URL] <!-- cuando la subas -->
 - **Vídeo demo**: [📝 URL]
 
@@ -65,7 +73,6 @@ JWT_SECRET=[📝 clave-muy-secreta]
 
 ## Future Work
 - 💳 Apple/Google Pay integration
-- 🌍 Localización multilingüe (i18n)
 - 📈 Reporte financiero descargable en PDF
 
 ---
@@ -78,6 +85,6 @@ JWT_SECRET=[📝 clave-muy-secreta]
 ---
 
 ## Team members
-| Nombre             | Rol     | GitHub |
-|--------------------|---------|--------|
-| [📝 Paola Montaño] | Student | [📝 @tuusuario] |
+| Nombre           | Rol     | GitHub      |
+|------------------|---------|-------------|
+| ☺️ Paola Montaño | Student | 📝 @979-Pao |

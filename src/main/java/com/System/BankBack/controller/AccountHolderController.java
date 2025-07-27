@@ -14,6 +14,19 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * End-points para titulares de cuenta autenticados (AccountHolder).
+ * Todos requieren autenticación con el rol: ROLE_ACCOUNTHOLDER
+ *
+ * – GET     /holder/accounts               → Listar todas las cuentas del titular autenticado
+ * – GET     /holder/account/{accountId}   → Consultar el saldo de una cuenta específica (si es suya)
+ * – POST    /holder/transfer              → Realizar transferencia entre cuentas
+ * – PATCH   /holder/{accountId}/status    → Cambiar el estado de la cuenta (ACTIVE / FROZEN)
+ * – DELETE  /holder/{accountId}           → Cerrar (eliminar) una cuenta propia
+ *
+ * Todas las operaciones verifican internamente que la cuenta pertenezca al titular autenticado.
+ */
+
 @RestController
 @RequestMapping("/holder")
 @RequiredArgsConstructor
