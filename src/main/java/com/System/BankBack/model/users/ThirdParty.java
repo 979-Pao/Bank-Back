@@ -17,4 +17,5 @@ public class ThirdParty extends User {
     void init() {
         setRole(RoleType.THIRD_PARTY);
     }
+
 }

@@ -10,4 +10,5 @@ import lombok.*;
 public class Admin extends User {
     @PrePersist
     void init() { setRole(RoleType.ADMIN); }
+
 }
