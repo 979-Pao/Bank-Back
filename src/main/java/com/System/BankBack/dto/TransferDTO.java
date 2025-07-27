@@ -8,4 +8,7 @@ public class TransferDTO {
     private Long fromAccountId;
     private Long toAccountId;
     private BigDecimal amount;
+
+    public void setSecretKey(String s) {
+    }
 }

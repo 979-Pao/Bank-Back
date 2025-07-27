@@ -39,7 +39,7 @@ public class DataSeeder implements CommandLineRunner {
         holder.setUsername("paola");
         holder.setPassword(encoder.encode("holder123"));
         holder.setName("Paola");
-        holder.setDateOfBirth(LocalDate.of(1995, 4, 10));
+        holder.setDateOfBirth(LocalDate.of(1994, 4, 10));
 
         Address addr = new Address("Calle Luna 1", "Madrid", "28001", "ES");
         holder.setPrimaryAddress(addr);           // ¡obligatorio!

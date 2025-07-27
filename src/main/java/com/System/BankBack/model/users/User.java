@@ -27,5 +27,8 @@ public abstract class User {
     /** Se persiste como texto: ADMIN | ACCOUNTHOLDER | THIRD_PARTY */
     @Enumerated(EnumType.STRING)
     private RoleType role;
+
+    public void setHashedKey(String s) {
+    }
 }
 

@@ -27,8 +27,8 @@ public class ThirdPartyFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();           // ej. /thirdparty/send
 
         // --- Rutas que SÍ necesitan hashKey -----------------------------
-        boolean needsHash = path.startsWith(BASE + "/send") ||
-                path.startsWith(BASE + "/receive") ||
+        boolean needsHash = path.startsWith(BASE + "/refund") ||
+                path.startsWith(BASE + "/payment") ||
                 path.startsWith(BASE + "/transactions");
 
         if (!needsHash) {                 // /thirdparty/{id}   (DELETE)  etc.
