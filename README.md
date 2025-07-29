@@ -30,10 +30,9 @@ git clone https://github.com/979-Pao/Bank-Back.git
 cd BankBack
 
 # 2. Configura variables (application-dev.properties)
-SPRING_DATASOURCE_URL=jdbc:mysql://localhost:8080/bankback
-SPRING_DATASOURCE_USERNAME=[📝]
-SPRING_DATASOURCE_PASSWORD=[📝]
-JWT_SECRET=[📝 clave-muy-secreta]
+SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3314/system-bank?createDatabaseIfNotExist=true
+SPRING_DATASOURCE_USERNAME=[root]
+SPRING_DATASOURCE_PASSWORD=[ironhack]
 
 # 3. Arranca el servidor
 ./mvnw spring-boot:run
@@ -73,8 +72,9 @@ JWT_SECRET=[📝 clave-muy-secreta]
 |  POST      |ThirdParty   | `/thirdparty/payment`         | Envia dinero desde una cuenta usando hashKey         |
 |  GET     |ThirdParty    | `/thirdparty/transactions`    | Consulta todas las transaciones asociadas al hashKey |
 |  DELETE       |ThirdParty | `/thirdparty/{id}`          | Elimina un usuario ThirdParty                        |
----
-## Pruebas unitarias 
+
+## Testing
+### Pruebas unitarias 
 
 | Método                     | Comprueba                                                                 |
 |---------------------------|----------------------------------------------------------------------------------|
@@ -87,8 +87,7 @@ JWT_SECRET=[📝 clave-muy-secreta]
 | `safeWhenNormal()`       | No congela la cuenta si las condiciones de operación son normales.                         |
 | `send_ok()`    | Que un usuario ThirdParty pueda enviar dinero exitosamente usando un `hashedKey`.   |
 
----
-## Pruebas de integración 
+### Pruebas de integración 
 
 | Método                                | Comprueba                                                                  |
 |---------------------------------------|----------------------------------------------------------------------------------|
@@ -97,21 +96,17 @@ JWT_SECRET=[📝 clave-muy-secreta]
 | `sendMoney_ok()` | Que un tercero autorizado pueda enviar dinero con clave y token válidos.           |
 | `badKey_returns401()` | Rechazo (401 Unauthorized) si el `X-Hashed-Key` es inválido.  |
 
----
-## Repositorios 
+### Repositorios 
 
 | Método               | Comprueba                                              |
 |----------------------|--------------------------------------------------------------|
 | `findByUsername_ok()` | Verifica que el repositorio devuelva un usuario existente. |
 
----
-## Spring Boot Contexto
+### Spring Boot Contexto
 
 | Método                            | Comprueba                                                       |
 |-----------------------------------|-----------------------------------------------------------------------|
 | `contextStarts_and_coreBeansPresent()` | Que el contexto Spring arranca correctamente y registra los beans esenciales. |
-
-
 
 ---
 ## Enlaces extra
