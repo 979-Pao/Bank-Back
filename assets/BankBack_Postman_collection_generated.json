@@ -1,0 +1,648 @@
+{
+  "info": {
+    "name": "BankBack API (Sample)",
+    "_postman_id": "df3ed577-165c-431a-9767-99c23517b893",
+    "description": "Postman collection with example requests for the BankBack REST API.\n\nVariables:\n- `base_url` (default: http://localhost:8080)\n- `token`    (set after /auth/login response)\n- `hashed_key` (default: 9f5a0d8e-abcdef)\n",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "token",
+      "value": "<paste\u2011JWT\u2011here>"
+    },
+    {
+      "key": "hashed_key",
+      "value": "9f5a0d8e-abcdef"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login (paola holder)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"paola\",\n  \"password\": \"holder123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login (gateway third\u2011party)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"gateway\",\n  \"password\": \"third123\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Create AccountHolder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/holders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "holders"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"younghero\",\n  \"password\": \"holder123\",\n  \"name\": \"Young Hero\",\n  \"dateOfBirth\": \"2005-08-01\",\n  \"primaryAddress\": {\n    \"street\": \"Calle Juvenil 1\",\n    \"city\": \"Barcelona\",\n    \"postalCode\": \"08001\",\n    \"country\": \"ES\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Checking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/checking",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "checking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"primaryOwnerId\": 4,\n  \"initialBalance\": 500,\n  \"secretKey\": \"secret-young\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Savings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/savings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "savings"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"primaryOwnerId\": 4,\n  \"initialBalance\": 1200,\n  \"secretKey\": \"savings-key\",\n  \"interestRate\": 0.02,\n  \"minimumBalance\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Credit\u2011Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/credit-card",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "credit-card"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"primaryOwnerId\": 4,\n  \"initialBalance\": 200,\n  \"interestRate\": 0.18,\n  \"creditLimit\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Third\u2011Party",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/third-party",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "third-party"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"cooperativaAmor\",\n  \"password\": \"pagoSeguro123\",\n  \"name\": \"Cooperativa Amor LTDA\",\n  \"hashKey\": \"df88a3fa-b4cd-4b92-9d44-40b67e3dc613\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Accounts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "accounts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Holders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/holders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "holders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Third\u2011Parties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/third-parties",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "third-parties"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Account Balance",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/accounts/1/balance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "accounts",
+                "1",
+                "balance"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newBalance\": 800\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/accounts/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "admin",
+                "accounts",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AccountHolder",
+      "item": [
+        {
+          "name": "List My Accounts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/holder/accounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "holder",
+                "accounts"
+              ]
+            }
+          }
+        },
+        {
+          "name": "View Account Balance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/holder/account/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "holder",
+                "account",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Transfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/holder/transfer",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "holder",
+                "transfer"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromAccountId\": 1,\n  \"toAccountId\": 2,\n  \"amount\": 100,\n  \"secretKey\": \"secret-young\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Change Account Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/holder/1/status?status=FROZEN",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "holder",
+                "1",
+                "status?status=FROZEN"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete My Account",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/holder/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "holder",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Third\u2011Party",
+      "item": [
+        {
+          "name": "Receive Money (refund)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hashed-Key",
+                "value": "{{hashed_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/thirdparty/refund",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "thirdparty",
+                "refund"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"secretKey\": \"secret-young\",\n  \"amount\": 50\n}"
+            }
+          }
+        },
+        {
+          "name": "Send Money (payment)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Hashed-Key",
+                "value": "{{hashed_key}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/thirdparty/payment",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "thirdparty",
+                "payment"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountId\": 1,\n  \"secretKey\": \"secret-young\",\n  \"amount\": 20\n}"
+            }
+          }
+        },
+        {
+          "name": "List My Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Hashed-Key",
+                "value": "{{hashed_key}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/thirdparty/transactions",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "thirdparty",
+                "transactions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Third\u2011Party (admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/thirdparty/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "thirdparty",
+                "5"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
